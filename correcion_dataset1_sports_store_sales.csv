@@ -1,4 +1,4 @@
-sale_id,date,store,city,product_category,product_name,size,payment_method,quantity,unit_price,discount_pct,seller,returned
+ventas_id,fecha,almacen,ciudad,categoria_producto,nombre_producto,tamaño,metodo_pago,cantidad,precio_unitario,descuento_producto,vendedor,regreso
 1,2024-03-08,Tienda Centro,Bogota,Fútbol,Guantes de portero,,Transferencia,3,49224.64,0,Carlos,N
 2,2024-02-11,Tienda Sur,Bogota,Running,Tenis running,,Tarjeta,1,89359.7,15,Luis,N
 3,2024-03-09,Tienda Norte,Bogota,Tenis,Raqueta tenis,L,Efectivo,2,248259.49,5,María,N
