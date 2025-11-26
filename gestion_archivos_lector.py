@@ -1,31 +1,33 @@
-import csv
-from datetime import datetime
+from funciones import Tienda
 
-class CorrectorCSVVentas:
-    def __init__(self, archivo_entrada, archivo_salida):
-        self.archivo_entrada = archivo_entrada
-        self.archivo_salida = archivo_salida
+def menu():
+    print("\n========== MENU ==========")
+    print("1) Promedio de ventas por mes")
+    print("2) Moda del vendedor por mes")
+    print("3) Sucursal con más ventas")
+    print("4) Registro cantidad de productos")
+    print("5) Registro tallas")
+    print("0) Salir")
 
-    def leer_csv(self):
-        """Lee el archivo CSV y devuelve las filas como lista de diccionarios."""
-        with open(self.archivo_entrada, mode="r", newline="", encoding="utf-8") as f:
-            lector = csv.DictReader(f)
-            return list(lector)
+# --- INICIO DEL PROGRAMA ---
+tienda = Tienda(r"C:\Users\FORMACION\Downloads\26-11-25\dataset1_sports_store_sales.csv")
 
-    def escribir_csv(self, filas):
-        """Escribe una lista de diccionarios en un nuevo archivo CSV."""
-        if not filas:
-            print("No hay datos para escribir.")
-            return
+while True:
+    menu()
+    opcion = input("\nSeleccione opción: ")
 
-        with open(self.archivo_salida, mode="w", newline="", encoding="utf-8") as f:
-            campos = filas[0].keys()  # Usa las claves del primer diccionario como encabezados
-            escritor = csv.DictWriter(f, fieldnames=campos)
-            escritor.writeheader()
-            escritor.writerows(filas)
-        print(f"Archivo escrito correctamente en: {self.archivo_salida}")
-
-# Ejemplo de uso
-corrector = CorrectorCSVVentas("limpiez_datos_carro/dataset1_sports_store_sales.csv", "limpiez_datos_carro/correcion_dataset1_sports_store_sales.csv")
-filas = corrector.leer_csv()
-corrector.escribir_csv(filas)
+    if opcion == "1":
+        tienda.promedio_ventas_mes()
+    elif opcion == "2":
+        tienda.moda_vendedor_mes()
+    elif opcion == "3":
+        tienda.sucursal_mas_ventas()
+    elif opcion == "4":
+        tienda.registro_cantidad_productos()
+    elif opcion == "5":
+        tienda.registro_tallas()
+    elif opcion == "0":
+        print("\n👍 Saliendo…")
+        break
+    else:
+        print("\n⚠️ Opción inválida")
