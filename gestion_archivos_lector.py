@@ -14,7 +14,6 @@ class CorrectorCSVVentas:
             lector = csv.DictReader(f)
             filas = list(lector)
 
-
     def escribir_csv(self, filas):
         """Escribe una lista de diccionarios en un nuevo archivo CSV."""
         if not filas:

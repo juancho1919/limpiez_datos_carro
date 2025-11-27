@@ -5,8 +5,8 @@ ventas_id,fecha,almacen,ciudad,categoria_producto,nombre_producto,tamaño,metodo
 4,2024-03-21,Tienda Sur,Bogotá,Fútbol,Camiseta equipo,XL,Transferencia,1,93917.21,10,María,N
 5,2024-01-15,Tienda Centro,Bogotá,Fútbol,Camiseta equipo,N/A,Tarjeta,5,114952.9,15,Luis,N
 6,2024-01-20,Tienda Centro,Bogotá,Baloncesto,Balón baloncesto,M,Tarjeta,3,105198.52,0,Luis,N
-7,2024-01-18,Tienda Sur,Medellín,Correr, Tenis running,S,Efectivo,3,208946.31,0,María,Y
-8,2024-04-04,Tienda Centro,Medellín,Tenis, Raqueta tenis,XL,Transferencia,4,106701.15,10,Luis,N
+7,2024-01-18,Tienda Sur,Medellín,Correr,Tenis running,S,Efectivo,3,208946.31,0,María,Y
+8,2024-04-04,Tienda Centro,Medellín,Tenis,Raqueta tenis,XL,Transferencia,4,106701.15,10,Luis,N
 9,2024-03-05,Tienda Centro,Bogotá,Entrenamiento,Short deportivo,M,Transferencia,4,115540.44,0,María,N
 10,2024-03-13,Tienda Sur,Cali,Fútbol,Guantes de portero,M,Transferencia,5,220633.56,5,María,N
 11,2024-03-27,Tienda Norte,Cali,Entrenamiento,Short deportivo,S,Efectivo,1,82652.82,15,Carlos,N
@@ -18,7 +18,7 @@ ventas_id,fecha,almacen,ciudad,categoria_producto,nombre_producto,tamaño,metodo
 17,2024-01-07,Tienda Centro,Medellín,Fútbol,Balón fútbol,L,Tarjeta,4,126988.25,0,Luis,N
 18,2024-03-12,Tienda Norte,Cali,Correr,Tenis running,L,Efectivo,5,238052.58,5,Ana,N
 19,2024-02-23,Tienda Centro,Bogotá,Baloncesto,Balón baloncesto,S,Tarjeta,3,133457.57,10,Luis,N
-20,2024-02-15,Tienda Sur,Cali,Fútbol, Guayos,XL,Tarjeta,4,247174.31,15,Luis,N
+20,2024-02-15,Tienda Sur,Cali,Fútbol,Guayos,XL,Tarjeta,4,247174.31,15,Luis,N
 21,2024-02-14,Tienda Norte,Bogotá,Baloncesto,Balón baloncesto,L,Tarjeta,4,88895.06,0,Carlos,N
 22,2024-03-14,Tienda Centro,Bogotá,Fútbol,Guayos,M,Transferencia,5,176775.88,15,NULL,N
 23,2024-01-14,Tienda Sur,Medellín,Fútbol,Guayos,N/A,Tarjeta,3,25387.1,0,Ana,N
@@ -49,7 +49,7 @@ ventas_id,fecha,almacen,ciudad,categoria_producto,nombre_producto,tamaño,metodo
 48,2024-03-09,Tienda Norte,Bogotá,Baloncesto,Balón baloncesto,S,Tarjeta,4,159601.8,5,María,N
 49,2024-04-25,Tienda Sur,Bogotá,Baloncesto,Balón baloncesto,XL,Efectivo,1,75442.46,10,Ana,N
 50,2024-03-06,Tienda Sur,Bogotá,Fútbol,Guantes de portero,S,Efectivo,3,162590.03,5,Luis,N
-51,2024-04-02,Tienda Sur,Medellín,Fútbol, Balón fútbol,Única,Tarjeta,3,180049.06,0,Ana,N
+51,2024-04-02,Tienda Sur,Medellín,Fútbol,Balón fútbol,Única,Tarjeta,3,180049.06,0,Ana,N
 52,2024-03-04,Tienda Centro,Bogotá,Baloncesto,Balón baloncesto,S,Efectivo,3,162980.72,0,Luis,Y
 53,2024-03-09,Tienda Centro,Bogotá,Tenis,Raqueta tenis,M,Transferencia,2,102051.12,5,Carlos,Y
 54,2024-04-23,Tienda Sur,Medellín,Entrenamiento,Short deportivo,Única,Efectivo,1,170072.33,10,Juan,N
@@ -86,7 +86,7 @@ ventas_id,fecha,almacen,ciudad,categoria_producto,nombre_producto,tamaño,metodo
 85,2024-03-21,Tienda Norte,Bogotá,Fútbol,Camiseta equipo,L,Transferencia,4,225135.88,10,Luis,N
 86,2024-01-04,Tienda Centro,Cali,Fútbol,Camiseta equipo,Única,Efectivo,1,69455.41,0,Juan,Y
 87,2024-03-14,Tienda Centro,Medellín,Correr,Tenis running,XL,Tarjeta,4,150875.9,0,NULL,N
-88,2024-04-20,Tienda Sur,Cali,Fútbol, Guayos,N/A,Transferencia,4,194949.76,15,María,N
+88,2024-04-20,Tienda Sur,Cali,Fútbol,Guayos,N/A,Transferencia,4,194949.76,15,María,N
 89,2024-02-12,Tienda Sur,Medellín,Fútbol,Camiseta equipo,M,Transferencia,1,146754.59,10,María,N
 90,2024-04-22,Tienda Sur,Bogotá,Entrenamiento,Short deportivo,L,Transferencia,1,226693.58,0,Ana,N
 91,2024-01-20,Tienda Norte,Bogotá,Correr,Tenis running,Única,Efectivo,5,88648.01,0,Carlos,N
@@ -107,7 +107,7 @@ ventas_id,fecha,almacen,ciudad,categoria_producto,nombre_producto,tamaño,metodo
 106,2024-02-04,Tienda Centro,Bogotá,Tenis,Raqueta tenis,Única,Transferencia,1,26947.95,0,María,N
 107,2024-03-03,Tienda Centro,Bogotá,Fútbol,Balón fútbol,XL,Tarjeta,4,189721.02,15,Ana,N
 108,2024-03-31,Tienda Norte,Medellín,Correr,Tenis running,M,Transferencia,2,223905.42,0,María,N
-109,2024-04-22,Tienda Sur,Medellín,Baloncesto, Balón baloncesto,Única,Tarjeta,5,197833.47,0,Juan,N
+109,2024-04-22,Tienda Sur,Medellín,Baloncesto,Balón baloncesto,Única,Tarjeta,5,197833.47,0,Juan,N
 110,2024-03-05,Tienda Norte,Medellín,Baloncesto,Balón baloncesto,L,Tarjeta,5,115726.45,5,Luis,Y
 111,2024-04-14,Tienda Centro,Cali,Fútbol,Balón fútbol,L,Efectivo,3,98978.74,0,Juan,N
 112,2024-03-18,Tienda Sur,Bogotá,Entrenamiento,Short deportivo,N/A,Tarjeta,5,106470.3,0,Luis,Y
