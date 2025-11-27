@@ -1,3 +1,5 @@
+
+
 from gestion_archivos_lector import CorrectorCSVVentas
 
 # Diccionario de cambios de nombres de columnas
@@ -53,6 +55,15 @@ def corregir_tamano(filas):
                 fila["tamaño"] = "N/A"
     return filas
 
+def corregir_vendedor(filas):
+    """Reemplaza espacios vacíos o valores nulos por 'NULL' en la columna vendedor."""
+    for fila in filas:
+        if "vendedor" in fila:
+            valor = fila["vendedor"].strip()
+            if valor == "" or valor.lower() in ["na", "null", "none"]:
+                fila["vendedor"] = "NULL"
+    return filas
+
 # Ejecución en cadena
 corrector = CorrectorCSVVentas(
     "limpiez_datos_carro/dataset1_sports_store_sales.csv",
@@ -64,5 +75,5 @@ filas = corrector.leer_csv()
 filas = corregir_ciudades(filas)     # Corrección de ciudades
 filas = corregir_tamano(filas)       # Corrección de tamaños
 filas = corregir_deporte(filas)      # Corrección de deportes
+filas = corregir_vendedor(filas)     # Corrección de vendedores
 corrector.escribir_csv(filas)
-
