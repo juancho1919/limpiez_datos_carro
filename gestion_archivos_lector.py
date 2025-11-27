@@ -1,4 +1,6 @@
-from funciones import Tienda
+import csv
+from datetime import datetime 
+
 
 class CorrectorCSVVentas:
     def __init__(self, archivo_entrada, archivo_salida, nuevos_encabezados=None):
@@ -12,21 +14,12 @@ class CorrectorCSVVentas:
             lector = csv.DictReader(f)
             filas = list(lector)
 
-            # Si hay mapeo de encabezados, renombramos las claves
-            if self.nuevos_encabezados:
-                filas_corregidas = []
-                for fila in filas:
-                    nueva_fila = {}
-                    for clave, valor in fila.items():
-                        nuevo_nombre = self.nuevos_encabezados.get(clave, clave)
-                        nueva_fila[nuevo_nombre] = valor
-                    filas_corregidas.append(nueva_fila)
-                return filas_corregidas
-            return filas
 
-while True:
-    menu()
-    opcion = input("\nSeleccione opción: ")
+    def escribir_csv(self, filas):
+        """Escribe una lista de diccionarios en un nuevo archivo CSV."""
+        if not filas:
+            print("No hay datos para escribir.")
+            return
 
         with open(self.archivo_salida, mode="w", newline="", encoding="utf-8") as f:
             campos = filas[0].keys()  # Ahora ya son los nombres nuevos
