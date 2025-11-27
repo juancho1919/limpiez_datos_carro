@@ -1,33 +1,64 @@
 from funciones import Tienda
 
-def menu():
-    print("\n========== MENU ==========")
-    print("1) Promedio de ventas por mes")
-    print("2) Moda del vendedor por mes")
-    print("3) Sucursal con más ventas")
-    print("4) Registro cantidad de productos")
-    print("5) Registro tallas")
-    print("0) Salir")
+class CorrectorCSVVentas:
+    def __init__(self, archivo_entrada, archivo_salida, nuevos_encabezados=None):
+        self.archivo_entrada = archivo_entrada
+        self.archivo_salida = archivo_salida
+        self.nuevos_encabezados = nuevos_encabezados  # Diccionario con cambios de nombres
 
-# --- INICIO DEL PROGRAMA ---
-tienda = Tienda(r"C:\Users\FORMACION\Downloads\26-11-25\dataset1_sports_store_sales.csv")
+    def leer_csv(self):
+        """Lee el archivo CSV y devuelve las filas como lista de diccionarios."""
+        with open(self.archivo_entrada, mode="r", newline="", encoding="utf-8") as f:
+            lector = csv.DictReader(f)
+            filas = list(lector)
+
+            # Si hay mapeo de encabezados, renombramos las claves
+            if self.nuevos_encabezados:
+                filas_corregidas = []
+                for fila in filas:
+                    nueva_fila = {}
+                    for clave, valor in fila.items():
+                        nuevo_nombre = self.nuevos_encabezados.get(clave, clave)
+                        nueva_fila[nuevo_nombre] = valor
+                    filas_corregidas.append(nueva_fila)
+                return filas_corregidas
+            return filas
 
 while True:
     menu()
     opcion = input("\nSeleccione opción: ")
 
-    if opcion == "1":
-        tienda.promedio_ventas_mes()
-    elif opcion == "2":
-        tienda.moda_vendedor_mes()
-    elif opcion == "3":
-        tienda.sucursal_mas_ventas()
-    elif opcion == "4":
-        tienda.registro_cantidad_productos()
-    elif opcion == "5":
-        tienda.registro_tallas()
-    elif opcion == "0":
-        print("\n👍 Saliendo…")
-        break
-    else:
-        print("\n⚠️ Opción inválida")
+        with open(self.archivo_salida, mode="w", newline="", encoding="utf-8") as f:
+            campos = filas[0].keys()  # Ahora ya son los nombres nuevos
+            escritor = csv.DictWriter(f, fieldnames=campos)
+            escritor.writeheader()
+            escritor.writerows(filas)
+        print(f"Archivo escrito correctamente en: {self.archivo_salida}")
+
+
+# Ejemplo de uso
+nuevos_nombres = {
+    "sale_id": "ventas_id",
+    "date": "fecha",
+    "store": "almacen",
+    "city": "ciudad",
+    "product_category": "categoria_producto",
+    "product_name": "nombre_producto",
+    "size": "tamaño",
+    "payment_method": "metodo_pago",
+    "quantity": "cantidad",
+    "unit_price": "precio_unitario",
+    "discount_pct": "descuento_producto",
+    "seller": "vendedor",
+    "returned": "regreso"
+}
+
+
+corrector = CorrectorCSVVentas(
+    "limpiez_datos_carro/dataset1_sports_store_sales.csv",
+    "limpiez_datos_carro/correcion_dataset1_sports_store_sales.csv",
+    nuevos_encabezados=nuevos_nombres
+)
+
+filas = corrector.leer_csv()
+corrector.escribir_csv(filas)
