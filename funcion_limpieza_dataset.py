@@ -1,6 +1,44 @@
+import csv
+from datetime import datetime 
 
+class CorrectorCSVVentas:
+    def __init__(self, archivo_entrada, archivo_salida, nuevos_encabezados=None):
+        self.archivo_entrada = archivo_entrada
+        self.archivo_salida = archivo_salida
+        self.nuevos_encabezados = nuevos_encabezados  # Diccionario con cambios de nombres
 
-from gestion_archivos_lector import CorrectorCSVVentas
+    def leer_csv(self):
+        """Lee el archivo CSV y devuelve las filas como lista de diccionarios."""
+        with open(self.archivo_entrada, mode="r", newline="", encoding="utf-8") as f:
+            lector = csv.DictReader(f)
+            filas = list(lector)
+
+            # Si hay mapeo de encabezados, renombramos las claves
+            if self.nuevos_encabezados:
+                filas_corregidas = []
+                for fila in filas:
+                    nueva_fila = {}
+                    for clave, valor in fila.items():
+                        nuevo_nombre = self.nuevos_encabezados.get(clave, clave)
+                        nueva_fila[nuevo_nombre] = valor
+                    filas_corregidas.append(nueva_fila)
+                return filas_corregidas
+
+        return filas   # <-- ahora siempre devuelve las filas
+
+    def escribir_csv(self, filas):
+        """Escribe una lista de diccionarios en un nuevo archivo CSV."""
+        if not filas:
+            print("No hay datos para escribir.")
+            return
+
+        with open(self.archivo_salida, mode="w", newline="", encoding="utf-8") as f:
+            campos = filas[0].keys()  # Ahora ya son los nombres nuevos
+            escritor = csv.DictWriter(f, fieldnames=campos)
+            escritor.writeheader()
+            escritor.writerows(filas)
+        print(f"Archivo escrito correctamente en: {self.archivo_salida}")
+
 
 # Diccionario de cambios de nombres de columnas
 nuevos_nombres = {
@@ -19,10 +57,19 @@ nuevos_nombres = {
     "returned": "regreso"
 }
 
+# Funciones de corrección
+def eliminar_espacios(filas):
+    """Elimina espacios en blanco al inicio y final de todos los valores."""
+    for fila in filas:
+        for clave, valor in fila.items():
+            if isinstance(valor, str):
+                fila[clave] = valor.strip()
+    return filas
+
 def corregir_ciudades(filas):
     for fila in filas:
         if "ciudad" in fila:
-            ciudad = fila["ciudad"].strip().lower()
+            ciudad = fila["ciudad"].lower()
             if ciudad in ["bogotá", "bogota", "bogota d.c."]:
                 fila["ciudad"] = "Bogotá"
             elif ciudad in ["medellin", "medellín"]:
@@ -34,7 +81,7 @@ def corregir_ciudades(filas):
 def corregir_deporte(filas):
     for fila in filas:
         if "categoria_producto" in fila:
-            deporte = fila["categoria_producto"].strip().lower()
+            deporte = fila["categoria_producto"].lower()
             if deporte in ["futbol", "fútbol"]:
                 fila["categoria_producto"] = "Fútbol"
             elif deporte == "baloncesto":
@@ -50,7 +97,7 @@ def corregir_deporte(filas):
 def corregir_tamano(filas):
     for fila in filas:
         if "tamaño" in fila:
-            valor = fila["tamaño"].strip()
+            valor = fila["tamaño"]
             if valor == "" or valor.lower() in ["na", "null", "none"]:
                 fila["tamaño"] = "N/A"
     return filas
@@ -59,10 +106,18 @@ def corregir_vendedor(filas):
     """Reemplaza espacios vacíos o valores nulos por 'NULL' en la columna vendedor."""
     for fila in filas:
         if "vendedor" in fila:
-            valor = fila["vendedor"].strip()
+            valor = fila["vendedor"]
             if valor == "" or valor.lower() in ["na", "null", "none"]:
                 fila["vendedor"] = "NULL"
     return filas
+
+def corregir_nombre_producto(filas):
+    """Quita los espacios iniciales de la columna nombre_producto."""
+    for fila in filas:
+        if "nombre_producto" in fila and isinstance(fila["nombre_producto"], str):
+            fila["nombre_producto"] = fila["nombre_producto"].lstrip()
+    return filas
+
 
 # Ejecución en cadena
 corrector = CorrectorCSVVentas(
@@ -72,8 +127,14 @@ corrector = CorrectorCSVVentas(
 )
 
 filas = corrector.leer_csv()
-filas = corregir_ciudades(filas)     # Corrección de ciudades
-filas = corregir_tamano(filas)       # Corrección de tamaños
-filas = corregir_deporte(filas)      # Corrección de deportes
-filas = corregir_vendedor(filas)     # Corrección de vendedores
-corrector.escribir_csv(filas)
+
+if filas:   # Solo si hay datos
+    filas = eliminar_espacios(filas)        # Limpieza general de espacios
+    filas = corregir_ciudades(filas)        # Corrección de ciudades
+    filas = corregir_tamano(filas)          # Corrección de tamaños
+    filas = corregir_deporte(filas)         # Corrección de deportes
+    filas = corregir_vendedor(filas)        # Corrección de vendedores
+    filas = corregir_nombre_producto(filas) # Corrección de nombre_producto
+    corrector.escribir_csv(filas)
+else:
+    print("El archivo de entrada está vacío o no se pudo leer correctamente.")
