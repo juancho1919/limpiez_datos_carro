@@ -1,7 +1,7 @@
 from funciones import Tienda
 
 # Usamos la misma dirección del archivo corregido
-RUTA_CSV = r"C:\Users\User\Documents\correccion\limpiez_datos_carro\correcion_dataset1_sports_store_sales.csv"
+RUTA_CSV = r"C:\Users\User\Documents\correcion\limpiez_datos_carro\correcion_dataset1_sports_store_sales.csv"
 
 # Instanciamos la clase Tienda con el CSV corregido
 tienda = Tienda(RUTA_CSV)
