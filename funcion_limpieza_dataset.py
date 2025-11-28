@@ -1,30 +1,41 @@
 import csv
 from datetime import datetime 
 
-class CorrectorCSVVentas:
-    def __init__(self, archivo_entrada, archivo_salida, nuevos_encabezados=None):
+class Funcion_Limpieza_Dataset:
+    def __init__(self, archivo_entrada, archivo_salida):
         self.archivo_entrada = archivo_entrada
         self.archivo_salida = archivo_salida
-        self.nuevos_encabezados = nuevos_encabezados  # Diccionario con cambios de nombres
 
     def leer_csv(self):
-        """Lee el archivo CSV y devuelve las filas como lista de diccionarios."""
+        nuevos_encabezados = {
+            "sale_id": "Ventas_id",
+            "date": "fecha",
+            "store": "almacen",
+            "city": "ciudad",
+            "product_category": "categoria_producto",
+            "product_name": "nombre_producto",
+            "size": "tamaño",
+            "payment_method": "metodo_pago",
+            "quantity": "cantidad",
+            "unit_price": "precio_unitario",
+            "discount_pct": "descuento_producto",
+            "seller": "vendedor",
+            "returned": "regreso"
+        }
+
         with open(self.archivo_entrada, mode="r", newline="", encoding="utf-8") as f:
             lector = csv.DictReader(f)
             filas = list(lector)
 
-            # Si hay mapeo de encabezados, renombramos las claves
-            if self.nuevos_encabezados:
-                filas_corregidas = []
-                for fila in filas:
-                    nueva_fila = {}
-                    for clave, valor in fila.items():
-                        nuevo_nombre = self.nuevos_encabezados.get(clave, clave)
-                        nueva_fila[nuevo_nombre] = valor
-                    filas_corregidas.append(nueva_fila)
-                return filas_corregidas
-
-        return filas   # <-- ahora siempre devuelve las filas
+            # Aplicar el mapeo de encabezados
+            filas_corregidas = []
+            for fila in filas:
+                nueva_fila = {}
+                for clave, valor in fila.items():
+                    nuevo_nombre = nuevos_encabezados.get(clave, clave)
+                    nueva_fila[nuevo_nombre] = valor
+                filas_corregidas.append(nueva_fila)
+            return filas_corregidas
 
     def escribir_csv(self, filas):
         """Escribe una lista de diccionarios en un nuevo archivo CSV."""
@@ -33,33 +44,15 @@ class CorrectorCSVVentas:
             return
 
         with open(self.archivo_salida, mode="w", newline="", encoding="utf-8") as f:
-            campos = filas[0].keys()  # Ahora ya son los nombres nuevos
+            campos = filas[0].keys()  # Ya son los nombres nuevos
             escritor = csv.DictWriter(f, fieldnames=campos)
             escritor.writeheader()
             escritor.writerows(filas)
         print(f"Archivo escrito correctamente en: {self.archivo_salida}")
 
 
-# Diccionario de cambios de nombres de columnas
-nuevos_nombres = {
-    "sale_id": "ventas_id",
-    "date": "fecha",
-    "store": "almacen",
-    "city": "ciudad",
-    "product_category": "categoria_producto",
-    "product_name": "nombre_producto",
-    "size": "tamaño",
-    "payment_method": "metodo_pago",
-    "quantity": "cantidad",
-    "unit_price": "precio_unitario",
-    "discount_pct": "descuento_producto",
-    "seller": "vendedor",
-    "returned": "regreso"
-}
-
 # Funciones de corrección
 def eliminar_espacios(filas):
-    """Elimina espacios en blanco al inicio y final de todos los valores."""
     for fila in filas:
         for clave, valor in fila.items():
             if isinstance(valor, str):
@@ -103,7 +96,6 @@ def corregir_tamano(filas):
     return filas
 
 def corregir_vendedor(filas):
-    """Reemplaza espacios vacíos o valores nulos por 'NULL' en la columna vendedor."""
     for fila in filas:
         if "vendedor" in fila:
             valor = fila["vendedor"]
@@ -120,10 +112,9 @@ def corregir_nombre_producto(filas):
 
 
 # Ejecución en cadena
-corrector = CorrectorCSVVentas(
+corrector = Funcion_Limpieza_Dataset(
     "limpiez_datos_carro/dataset1_sports_store_sales.csv",
-    "limpiez_datos_carro/correcion_dataset1_sports_store_sales.csv",
-    nuevos_encabezados=nuevos_nombres
+    "limpiez_datos_carro/correcion_dataset1_sports_store_sales.csv"
 )
 
 filas = corrector.leer_csv()
